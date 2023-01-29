@@ -1,0 +1,28 @@
+<aura:component >
+    <aura:attribute name="NoReview" type="boolean" />
+    <lightning:layout verticalAlign="stretch" multipleRows="true" class="large">
+        <!-- left column -->
+        <lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box">
+            <lightning:inputField fieldName="No_Review_Escalation__c" value="{!v.NoReview}" aura:id="field" class="" disabled="false" required="false" />
+            <lightning:inputField fieldName="Escalate_To__c" aura:id="field" class="" disabled="false" required="{!v.NoReview == false}" />            
+            <lightning:inputField fieldName="Escalation_Notes__c" aura:id="field" class="" disabled="false" required="{!v.NoReview == false}" />
+            <lightning:outputField fieldName="OwnerId" aura:id="field" class="" disabled="false" />
+            <div class="slds-p-top_medium slds-p-bottom_medium">
+                <lightning:button variant="brand" label="Submit" type="submit" class="slds-float_right" />
+                <br/>
+            </div>                            
+        </lightning:layoutItem>
+        <!-- right column -->
+        <lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box">
+            <h3 class="slds-text-heading_medium slds-p-bottom_small">Guidance for Success</h3>
+            <ul class="slds-list_dotted">
+                <li>Select "No Review/Escalation" checkbox if there is no need to review or escalate.</li>
+                <li>If a "Review / Escalation" is needed:</li>
+                <ul class="slds-list_dotted">
+                    <li>Choose the appropriate party to Escalate To (obtain approval from a Supervisor, Engineer, Tech Lead or Account Lead before escalating)</li>
+                    <li>In the "Escalation Notes" field, enter detailed notes about what is needed.</li>
+                </ul>
+            </ul>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

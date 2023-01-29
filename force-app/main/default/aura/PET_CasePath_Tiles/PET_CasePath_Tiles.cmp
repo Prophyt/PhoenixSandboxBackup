@@ -1,0 +1,59 @@
+<aura:component >
+    <aura:attribute name="NoReminder" type="boolean" />
+    <aura:attribute name="NoReview" type="boolean" />
+    <aura:attribute name="NoReportBack" type="boolean" />
+    <aura:attribute name="showStage" type="string" />
+    
+    <lightning:layout verticalAlign="stretch" multipleRows="true">
+        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="2" largeDeviceSize="2" padding="around-small" class="custom-box tile-card">
+            <div onclick="{!c.setStage}" data-value="Findings / Notes" class="{!v.showStage == 'Findings / Notes' ? 'activeTile' : ''}">
+                <lightning:card variant="Narrow" title="" iconName="" footer="" class="slds-box">
+                    <lightning:icon iconName="utility:note"/>
+                    <p class="slds-p-horizontal_small">Findings/Notes</p>
+                </lightning:card>
+            </div>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="2" largeDeviceSize="2" padding="around-small" class="custom-box tile-card">
+            <div onclick="{!c.setStage}" data-value="Reminder / Follow Up" class="{!v.showStage == 'Reminder / Follow Up' ? 'activeTile' : ''}">
+                <lightning:card variant="Narrow" title="" iconName="" footer="" class="slds-box">
+                    <lightning:icon iconName="utility:date_time"/>
+                    <p class="slds-p-horizontal_small">Set Reminder</p>
+                </lightning:card>
+            </div>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="2" largeDeviceSize="2" padding="around-small" class="custom-box tile-card">
+            <div onclick="{!c.setStage}" data-value="Report Back" class="{!v.showStage == 'Report Back' ? 'activeTile' : ''}">
+                <lightning:card variant="Narrow" title="" iconName="" footer="" class="slds-box">
+                    <lightning:icon iconName="utility:alert"/>
+                    <p class="slds-p-horizontal_small">Report Back</p>
+                </lightning:card>
+            </div>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="2" largeDeviceSize="2" padding="around-small" class="custom-box tile-card">
+            <div onclick="{!c.setStage}" data-value="Review / Escalate" class="{!v.showStage == 'Review / Escalate' ? 'activeTile' : ''}">
+                <lightning:card variant="Narrow" title="" iconName="" footer="" class="slds-box">
+                    <lightning:icon iconName="utility:announcement"/>
+                    <p class="slds-p-horizontal_small">Review/Escalate</p>
+                </lightning:card>
+            </div>
+        </lightning:layoutItem> 
+        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="2" largeDeviceSize="2" padding="around-small" class="custom-box tile-card">
+            <div onclick="{!c.setStage}" data-value="3rd Party" class="{!v.showStage == '3rd Party' ? 'activeTile' : ''}">
+                <lightning:card variant="Narrow" title="" iconName="" footer="" class="slds-box">
+                    <lightning:icon iconName="utility:questions_and_answers"/>
+                    <p class="slds-p-horizontal_small">Update 3rd Party</p>
+                </lightning:card>
+            </div>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="2" largeDeviceSize="2" padding="around-small" class="custom-box tile-card">
+            <div onclick="{!c.setStage}" data-value="Resolution" class="{!v.showStage == 'Resolution' ? 'activeTile' : ''}">
+                <lightning:card variant="Narrow" title="" iconName="" footer="" class="slds-box">
+                    <lightning:icon iconName="utility:signpost"/>
+                    <p class="slds-p-horizontal_small">Resolution</p>
+                </lightning:card>
+            </div>
+        </lightning:layoutItem>        
+    </lightning:layout>
+    
+    
+</aura:component>

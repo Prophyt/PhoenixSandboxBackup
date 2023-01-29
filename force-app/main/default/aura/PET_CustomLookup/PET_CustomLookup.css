@@ -1,0 +1,16 @@
+.THIS .slds-leftpad
+{
+	padding-left: 2rem;
+}
+.THIS .iconheight
+{
+    top: 80%;
+}
+.THIS .fix svg
+{
+    margin-left:-8px; margin-top: -10px;
+}
+.THIS .leftspace input 
+{
+    padding-left:2.2rem;
+}

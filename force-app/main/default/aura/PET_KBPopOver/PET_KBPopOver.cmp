@@ -1,0 +1,15 @@
+<aura:component implements="force:hasRecordId">
+    <lightning:card>
+        <aura:set attribute="title">
+            <lightning:icon iconName="standard:knowledge" size="small"/>
+        </aura:set>
+        <div class="slds-text-longform">
+            <lightning:recordViewForm recordId="{!v.recordId}" objectApiName="Knowledge__kav">
+                <lightning:outputField fieldName="Title" />    
+                <lightning:outputField fieldName="Summary" />    
+                <lightning:outputField fieldName="ArticleNumber" />    
+                <lightning:outputField fieldName="Procedure_Steps__c" />
+            </lightning:recordViewForm>
+        </div>
+    </lightning:card>
+</aura:component>

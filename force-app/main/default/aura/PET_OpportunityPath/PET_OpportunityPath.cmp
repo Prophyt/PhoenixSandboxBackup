@@ -1,0 +1,39 @@
+<aura:component controller="OpportunityPathController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:html tag="style">
+        .slds-modal__container {
+        min-width: 65vw;
+        }
+    </aura:html>   
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="stageEvent" event="c:PET_StageEvent" action="{!c.handleStageChange}"/>
+    <aura:attribute name="today" type="Date" />
+    <aura:attribute name="userId" type="string" />
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    <aura:attribute name="recordTypeId" type="string" />
+    <aura:attribute name="currentStage" type="string" />
+    <aura:attribute name="showStage" type="string" />
+    <aura:attribute name="opportunityStage" type="string" />
+    
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="medium"/>
+	</aura:if>
+    
+    <lightning:card iconName="" title="">
+        <lightning:recordEditForm aura:id="recordForm"
+                                  objectApiName="Opportunity"  
+                                  recordId="{!v.recordId}"
+                                  recordTypeId="{!v.recordTypeId}"
+                                  onload="{!c.handleOnLoad}"
+                                  onsubmit="{!c.handleOnSubmit}"
+                                  onsuccess="{!c.handleOnSuccess}"
+                                  onerror="{!c.handleOnError}"
+                                  class="slds-card__body_inner">
+            
+            <lightning:messages/>
+            <lightning:inputField aura:id="oppStage" fieldName="StageName" value="{!v.opportunityStage}" class="slds-hide" />
+            <c:PET_OpportunityPath_Tiles showStage="{!v.showStage}" />
+            <c:PET_OpportunityPath_Actions showStage="{!v.showStage}" opportunityStage="{!v.opportunityStage}" />
+
+        </lightning:recordEditForm>
+    </lightning:card>	
+</aura:component>

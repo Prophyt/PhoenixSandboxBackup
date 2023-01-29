@@ -1,0 +1,117 @@
+<aura:component implements="flexipage:availableForRecordHome,flexipage:availableForAllPageTypes,force:hasRecordId,lightning:actionOverride,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" access="global" >
+    <aura:html tag="style">
+        .slds-modal__container {
+        min-width: 65vw;
+        }
+    </aura:html>   
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="today" type="Date" />
+    <aura:attribute name="userId" type="string" />
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    <aura:attribute name="caseType" type="string" />
+    <aura:attribute name="inboundAccountId" type="string" access="GLOBAL" />
+    <aura:attribute name="inboundParentAccountId" type="string" access="GLOBAL" />    
+    <aura:attribute name="accountId" type="string" access="GLOBAL"/>
+    <aura:attribute name="parentAccountId" type="string" access="GLOBAL"/>    
+    <aura:attribute name="contactId" type="string" access="GLOBAL"/>
+    <aura:attribute name="showNewContact" type="boolean" default="false" />
+    <aura:attribute name="contactName" type="string" access="GLOBAL" />
+    <aura:attribute name="recordTypeId" type="string" default="0125e000000OeG5AAK"/>
+    <aura:attribute name="focusedTabId" type="string" />
+    <lightning:workspaceAPI aura:id="workspace"/>
+    
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="medium"/>
+    </aura:if>
+    
+    <div class="slds-p-around_small">
+        <lightning:card iconName="" title="" class="slds-p-left_medium slds-p-right_medium">
+            <!--
+            <div class="slds-clearfix">
+                <img src="/file-asset/PHX_P?v=1&amp;width=64&amp;height=64" style="display:inline;float:left"/> 
+                <h1 class="slds-text-heading_large slds-p-top_large">Customer Support</h1>
+            </div>
+			-->
+            <hr />
+            <lightning:recordEditForm aura:id="recordEditForm"
+                                      objectApiName="Case"
+                                      onload="{!c.handleOnLoad}"
+                                      onsubmit="{!c.handleOnSubmit}"
+                                      onsuccess="{!c.handleOnSuccess}"
+                                      onerror="{!c.handleOnError}"
+                                      recordTypeId="{!v.recordTypeId}"
+                                      class="slds-card__body_inner">
+                
+                <lightning:messages />
+                <lightning:inputField aura:id="parentAccountLookup" fieldName="Parent_Account__c" required="true" value="{!v.parentAccountId}" />
+                <lightning:inputField aura:id="accountLookup" fieldName="AccountId" required="true" value="{!v.accountId}" />
+                <!--<lightning:inputField aura:id="field" fieldName="Call_Manager_Case__c" required="true" />-->
+                <lightning:inputField aura:id="field" fieldName="Type" required="true" value="{!v.caseType}"/>
+                <lightning:inputField aura:id="field" fieldName="Issue_Type__c" required="true"/>
+
+                <aura:if isTrue="{!v.caseType == 'Corporate'}" >
+                    <lightning:inputField aura:id="field" fieldName="Priority" required="true" />
+                    <lightning:inputField aura:id="field" fieldName="Origin" required="true" />
+
+                    <div class="slds-clearfix">
+                        <c:PET_CustomLookup aura:id="field" label="Contact Name" selectRecordName="{!v.contactName}" contactFilterMode="true" filterId="{!v.parentAccountId}" objectName="Contact" fieldName="Name" iconName="action:new_contact" selectRecordId="{!v.contactId}" required="true" />
+
+                        <lightning:inputField aura:id="field" fieldName="ContactId" value="{!v.contactId}" class="slds-hide"/>
+                        <lightning:button class="slds-m-top_small slds-float_right" type="button" variant="brand" label="New Contact" onclick="{!c.handleNewContact}" />
+                    </div>
+                </aura:if>
+                <aura:if isTrue="{!v.showNewContact}">
+                    <hr/>
+                    <lightning:card iconName="standard:contact" title="New Contact" class="slds-p-around_small">
+                        <lightning:recordEditForm aura:id="contactEditForm"
+                                                  objectApiName="Contact"
+                                                  onsubmit="{!c.handleContactSubmit}"
+                                                  onsuccess="{!c.handleContactSuccess}"
+                                                  onerror="{!c.handleContactError}"
+                                                  class="slds-card__body_inner">
+                            
+                            <lightning:inputField aura:id="accountLookup2" fieldName="AccountId" required="true" value="{!v.parentAccountId}" class="" />
+                            <lightning:inputField aura:id="contactField" fieldName="FirstName" required="true"/>
+                            <lightning:inputField aura:id="contactField" fieldName="LastName" required="true"/>
+                            <lightning:inputField aura:id="contactField" fieldName="Phone" required="false"/>
+                            <lightning:inputField aura:id="contactField" fieldName="Email" required="false"/>
+                            <lightning:inputField aura:id="contactField" fieldName="Contact_Type__c" required="true" />
+                            
+                            <lightning:button class="slds-m-top_small slds-float_right" type="submit" variant="brand" label="Submit" />
+                            <lightning:button class="slds-m-top_small slds-float_right slds-m-right_small" type="button" variant="destructive" label="Cancel" onclick="{!c.handleContactCancel}" />
+                        </lightning:recordEditForm>
+                    </lightning:card>
+                    <hr/>
+                </aura:if> 
+                <aura:if isTrue="{!and(v.caseType != null, v.caseType != '')}">
+                    <lightning:inputField aura:id="field" fieldName="Problem__c" required="true" />
+                </aura:if>
+                
+                <aura:if isTrue="{!v.caseType == 'Found on Alarm'}">
+                    <lightning:inputField aura:id="field" fieldName="Priority" required="true" />                	
+                </aura:if>
+                
+                <aura:if isTrue="{!or(v.caseType == 'Store', v.caseType == 'Technician')}">
+                    <lightning:inputField aura:id="field" fieldName="Priority" required="true" />
+                    <lightning:inputField aura:id="field" fieldName="Origin" required="true" />
+                    <lightning:inputField aura:id="field" fieldName="Reporting_Party__c" required="true" /> 
+                    <lightning:inputField aura:id="field" fieldName="Call_Back_Number__c" required="true" />
+                </aura:if>
+                
+                <lightning:inputField aura:id="field" fieldName="Subject" required="true" />
+                <lightning:inputField aura:id="field" fieldName="Description" required="true" />
+
+
+                
+                <div class="slds-p-around_small slds-clearfix">
+                    <lightning:button class="slds-m-top_small slds-float_right" type="submit" variant="brand" label="Submit" />                
+                    <lightning:button class="slds-m-top_small slds-float_right slds-m-right_small" type="button" variant="destructive" label="Reset" />
+                </div>
+
+            </lightning:recordEditForm>
+        </lightning:card>
+    </div>
+    
+    
+</aura:component>

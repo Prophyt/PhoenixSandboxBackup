@@ -1,0 +1,63 @@
+<aura:component controller="CasePathController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:html tag="style">
+        .slds-modal__container {
+        min-width: 65vw;
+        }
+    </aura:html>   
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="appEvent" type="c:PET_GlobalRefreshEvent"/>
+    <aura:attribute name="today" type="Date" />
+    <aura:attribute name="userId" type="string" />
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    <aura:attribute name="recordTypeId" type="string" />
+    <aura:attribute name="currentStage" type="string" />
+    <aura:attribute name="showStage" type="string" />
+    <aura:attribute name="caseStatus" type="string" />
+    <aura:attribute name="integrationMessage" type="string" />
+    <aura:attribute name="thirdPartySystem" type="string" />
+    <aura:attribute name="isNonAPICustomer" type="boolean" default="false"/>
+    <aura:attribute name="accountName" type="string" />
+    <aura:attribute name="accountParent" type="String" />
+    
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="medium"/>
+	</aura:if>
+    
+    
+    <!-- this is just used for pulling field values, actual work happens in the lightning:recordEditForm below-->
+    <aura:attribute name="CaseObject" type="Object" /> 
+    <aura:attribute name="recordLoadError" type="String"/>
+    <force:recordData aura:id="record"
+                      recordId="{!v.recordId}"
+                      fields="AccountId,Account.Name,Parent_Account__c,Parent_Account__r.Name,Account.ParentId,Account.Parent.Name"
+                      targetFields="{!v.CaseObject}"
+                      targetError="{!v.recordLoadError}"
+                      recordUpdated="{!c.recordUpdated}"                  
+                      />
+    
+    
+    {!v.recordLoadError}
+    <lightning:card iconName="" title="">
+        <lightning:recordEditForm aura:id="recordForm"
+                                  objectApiName="Case"  
+                                  recordId="{!v.recordId}"
+                                  recordTypeId="{!v.recordTypeId}"
+                                  onload="{!c.handleOnLoad}"
+                                  onsubmit="{!c.handleOnSubmit}"
+                                  onsuccess="{!c.handleOnSuccess}"
+                                  onerror="{!c.handleOnError}"
+                                  class="slds-card__body_inner">
+            
+            <lightning:messages/>
+            <lightning:inputField aura:id="caseStatusField" fieldName="Status" value="{!v.caseStatus}" class="slds-hide" />
+            <lightning:inputField aura:id="caseStageField" fieldName="Stage__c" value="{!v.currentStage}" class="slds-hide" />
+            <lightning:inputField fieldName="Integration_Message__c" value="{!v.integrationMessage}" aura:id="field" class="slds-hide" />
+            <lightning:inputField fieldName="X3rd_Party_System__c" value="{!v.thirdPartySystem}" aura:id="field" class="slds-hide" />
+
+            <c:PET_CasePath_Tiles showStage="{!v.showStage}" />
+            <c:PET_CasePath_Actions showStage="{!v.showStage}" caseStatus="{!v.caseStatus}" integrationMessage="{!v.integrationMessage}" thirdPartySystem="{!v.thirdPartySystem}" isNonAPICustomer="{!v.isNonAPICustomer}" accountParent="{!v.accountParent}" accountName="{!v.accountName}"  />
+
+        </lightning:recordEditForm>
+    </lightning:card>	
+</aura:component>

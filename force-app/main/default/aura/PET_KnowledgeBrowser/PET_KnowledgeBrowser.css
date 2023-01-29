@@ -1,0 +1,34 @@
+.THIS 
+{
+    background-color: white;   
+    min-height: 100vh;
+}
+.THIS .left-align
+{
+    text-align:left;
+}
+.THIS .right-align
+{
+    text-align:right;
+}
+.THIS .spacer
+{
+    height: 50px;
+    min-height:50px;
+    background-color:white;
+}
+.THIS .fixed
+{
+    position:fixed;
+    margin-left:5px;
+    margin-right:25px;
+    margin-bottom:100px;
+    min-height: 80vh;
+    overflow:scroll;
+    background-color:white;
+}
+
+.THIS .fixed-loaded
+{
+    height:80vh;
+}

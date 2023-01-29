@@ -1,0 +1,129 @@
+<aura:component controller="KnowledgeBrowserController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:html tag="style">
+        .slds-modal__container {
+        min-width: 65vw;
+        }
+    </aura:html>   
+    <lightning:navigation aura:id="navService"/>
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="items" type="Object" />
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    <aura:attribute name="selectedRecordId" type="string" />
+    <aura:attribute name="fileList" type="List"/>
+     
+    <aura:handler name="change" value="{!v.selectedRecordId}" action="{!c.selectedRecordChange}"/>
+    <aura:attribute name="showPopOver" type="boolean" default="false"/>
+
+    
+    <div class="slds-box slds-card cardOverride">
+        <aura:if isTrue="{!v.showSpinner}">
+            <lightning:spinner variant="brand" size="medium"/>
+        </aura:if>
+
+        <!--
+        <div class="slds-p-around_small">
+            <c:PET_AutoComplete aura:id="ac" label="Search" objectApiName="Knowledge__kav" idFieldApiName="Id" valueFieldApiName="Title" extendedWhereClause="AND PublishStatus = \'Online\'" selectedOption="{!v.selectedRecordId}"/>
+        </div>
+        -->  
+
+        
+        <aura:if isTrue="{!v.recordId == null}">
+            <div class="slds-grid">
+                <div class="slds-col slds-size_4-of-12 slds-p-around_small ">
+                    <lightning:tree items="{!v.items}" onselect="{!c.handleSelect}" header="Knowledge Articles" class="tree"/>
+                </div>
+                <div class="slds-col slds-size_8-of-12 slds-p-around_small">
+                    <div class="{!v.selectedRecordId != null ? 'fixed fixed-loaded' : ''}">
+
+                        <lightning:recordViewForm recordId="{!v.selectedRecordId}" objectApiName="Knowledge__kav" >
+                            <lightning:card iconName="standard:knowledge" title="{!v.selectedTitle}">
+                                <aura:set attribute="title">
+                                    <lightning:outputField fieldName="Title" variant="label-hidden" />    
+                                </aura:set>
+
+                                <!--<lightning:outputField fieldName="Summary" />-->
+
+                                <lightning:outputField fieldName="ArticleNumber" /> 
+                                <lightning:outputField fieldName="LastModifiedDate" />                            
+                            <aura:if isTrue="{!not(empty(v.fileList))}">
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="slds-text-title_caps" scope="col">
+                                                <div class="slds-truncate" title="Title">Title</div>
+                                            </th>
+                                            <th class="slds-text-title_caps" scope="col">
+                                                <div class="slds-truncate" title="File Type">File Type</div>
+                                            </th>
+                                            <th class="slds-text-title_caps" scope="col">
+                                                <div class="slds-truncate" title="Created Date">Created Date</div>
+                                            </th>
+                                            <th class="slds-text-title_caps" scope="col">
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration items="{!v.fileList}" var="cd">
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="slds-truncate" title="{!cd.Title}">
+                                                        <a onclick="{!c.handleSelectedDocPreview}" data-Id="{!cd.Id}">{!cd.Title}</a>
+                                                    </div>
+                                                </th>
+                                                <th scope="row">
+                                                    <div class="slds-truncate" title="{!cd.FileType}">
+                                                        {!cd.FileType}
+                                                    </div>
+                                                </th>
+                                                <th scope="row">
+                                                    <div class="slds-truncate" title="{!cd.CreatedDate}">
+                                                        <lightning:formattedDateTime value="{!cd.CreatedDate}"/>
+                                                    </div>
+                                                </th>
+                                                <th scope="row">
+                                                    <lightning:buttonMenu alternativeText="Show menu" menuAlignment="auto" onselect="{!c.handleSelectedAction}" value="{!cd.Id}">
+                                                        <lightning:menuItem value="Download" label="Download" iconName="utility:download" title="Download" />
+                                                    </lightning:buttonMenu>
+                                                </th>
+                                            </tr>  
+                                        </aura:iteration>
+                                    </tbody>
+                                </table>
+                            </aura:if>
+   
+                            <lightning:outputField fieldName="Procedure_Steps__c" />                            
+                            <div class="spacer">&nbsp;</div>
+                            </lightning:card>                            
+
+                        </lightning:recordViewForm>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!v.recordId != null}">
+            <div class="slds-grid">
+                <div class="slds-col slds-size_12-of-12 slds-p-around_small">
+                    <lightning:tree items="{!v.items}" onselect="{!c.handleRecordSelect}" header="Knowledge Articles"/>
+                </div>
+            </div>
+        </aura:if>
+        
+        <aura:if isTrue="{!v.showPopOver}">
+            <section class="slds-popover slds-popover_pane slds-nubbin_top-right" role="dialog" style="position:absolute;left:-250px;top:0px;width:600px;height:auto;">
+                <lightning:button variant="brand-outline" title="Attach to Case" class="slds-float_right slds-popover__close" onclick="{!c.attachArticle}">Attach to Case</lightning:button>
+                <lightning:button variant="brand" title="Open Article" class="slds-float_right slds-popover__close" onclick="{!c.openArticle}">Open Article</lightning:button>
+                <lightning:button variant="destructive" class="slds-float_right slds-popover__close" title="Close dialog" onclick="{!c.hidePopOver}">Close</lightning:button>
+                <header class="slds-popover__header">
+                    <h2 class="slds-text-heading_small">Article Viewer</h2>
+                </header>
+                <div class="slds-popover__body slds-popover__body_large">
+                    <c:PET_KBPopOver recordId="{!v.selectedRecordId}"/>
+                </div>
+                <footer class="slds-popover__footer">
+                    <p></p>
+                </footer>
+            </section>
+        </aura:if>
+    </div>
+</aura:component>

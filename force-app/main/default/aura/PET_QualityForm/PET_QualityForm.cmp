@@ -1,0 +1,47 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:html tag="style">
+        .slds-modal__container {
+        min-width: 65vw;
+        }
+    </aura:html>   
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="recordTypeId" type="String" />
+    <aura:attribute name="parentRecord" type="Case"/>
+    <aura:attribute name="today" type="Date" />
+    <aura:attribute name="childCaseType" type="String" />
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+        
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="medium"/>
+	</aura:if>
+    
+    <lightning:card iconName="standard:case" title="New Quality Form">
+        <aura:set attribute="actions">
+            
+        </aura:set>
+        <lightning:recordEditForm aura:id="recordForm"
+                                  recordTypeId="{!v.recordTypeId}"
+                                  objectApiName="Case"     
+                                  onload="{!c.handleOnLoad}"
+                                  onsubmit="{!c.handleOnSubmit}"
+                                  onsuccess="{!c.handleOnSuccess}"
+                                  onerror="{!c.handleOnError}"
+                                  class="slds-card__body_inner">
+            
+            <lightning:messages/>
+            <lightning:inputField fieldName="ParentId" aura:id="parentId" value="{!parentRecord.Id}" class="slds-hide" disabled="false" required="true" />
+            <lightning:inputField fieldName="Status" aura:id="status" value="New" class="slds-hide" />            
+            <lightning:inputField fieldName="AccountId" aura:id="companyLookup" value="{!v.parentRecord.AccountId}" class="" disabled="false" required="true" />
+            <lightning:inputField fieldName="Contact" aura:id="contactLookup" value="{!v.parentRecord.ContactId}" class="" disabled="false" />
+            <lightning:inputField fieldName="Agent_Name__c" aura:id="agentName" required="true" />
+
+            
+            
+            <div class="slds-p-top_medium slds-p-bottom_medium">
+                <lightning:button variant="brand" label="Submit" type="submit" class="slds-float_right" />
+                <br/>
+            </div>
+        </lightning:recordEditForm>
+    </lightning:card>    
+    
+</aura:component>

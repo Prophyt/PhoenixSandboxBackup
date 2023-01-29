@@ -1,0 +1,15 @@
+.THIS .custom-box {
+    background-color: #f4f6f9;
+    padding: 1rem;
+    border: 1px solid #d8dde6;
+}
+.THIS .tile-card 
+{
+    cursor: pointer;
+    text-align: center;
+    font-size: 1.5em;
+}
+.THIS .tile-card:hover
+{
+    background-color: rgba(94, 164, 67, 1);
+}

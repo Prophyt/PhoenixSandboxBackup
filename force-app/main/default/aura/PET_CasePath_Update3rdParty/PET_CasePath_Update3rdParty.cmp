@@ -1,0 +1,44 @@
+<aura:component >
+    <lightning:layout verticalAlign="stretch" multipleRows="true" class="large">
+        <!-- left column -->
+        <lightning:layoutItem size="6" flexibility="auto" padding="around-small" class="custom-box">
+            <lightning:outputField fieldName="Open_3rd_Party_WO__c" />
+            <lightning:inputField fieldName="X3rd_Party_Updated__c" aura:id="field" class="" disabled="false" required="false" />
+            <lightning:inputField fieldName="No_3rd_Party_Update_Dispatch_Not_Neede__c" aura:id="field" class="" disabled="false" required="false" />
+            <lightning:inputField fieldName="Vendor_Resolution_Notes__c" aura:id="field" class="" disabled="false" required="true" />
+            <lightning:inputField fieldName="Vendor_Relationship__c" aura:id="field" class="" disabled="false" required="true" />
+            
+            <div class="slds-p-top_medium slds-p-bottom_medium">
+                <lightning:button variant="brand" label="Submit" type="submit" class="slds-float_right" />
+                <br/>
+            </div>                
+        </lightning:layoutItem>
+        <!-- right column -->
+        <lightning:layoutItem size="6" flexibility="auto" padding="around-small" class="custom-box">
+            <h3 class="slds-text-heading_medium slds-p-bottom_small">Guidance for Success</h3>
+            <ul class="slds-list_dotted">
+                <li>If there is a link in the "Open 3rd Party WO" field, this means there is a linked Work Order. If there is no link, access the 3rd party manually.</li>
+            </ul>
+            <br/>
+            <h3><strong>ALL DISPACTHES MUST be done manually. Access the Work Order and dispatch.</strong></h3>
+            <br/>
+            <h1><strong>Service Channel:</strong></h1>
+            <ul class="slds-list_dotted">
+                <li>Petco: API is NOT turned on. Access Service Channel to add notes / dispatch / resolve.</li>
+                <li>Ulta, Rite Aid, Best Buy, J.Crew, H&amp;M, Cinemark: API is turned on. Resolution notes will copy over in the next stage.</li>
+            </ul>
+            <br/>
+            <h3><strong>SMS Assist:</strong></h3>
+            <ul class="slds-list_dotted">
+                <li>PetSmart: Login to SMS Assist to manually add note.</li>
+            </ul>
+            <br/>
+            <h3><strong>Vendor: BBBY, CTS, CPWM &amp; Transformco/Sears:</strong></h3>
+            <ul class="slds-list_dotted">
+                <li>Complete the Vendor Resolution Notes.</li>
+                <li>THEN Search for store name + number. An email will be sent for Email Vendors.</li>
+                <li>Login to Tango for Tango.</li>
+            </ul>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

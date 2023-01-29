@@ -1,0 +1,275 @@
+<aura:component >
+    <aura:attribute name="showStage" type="string" />
+    <aura:attribute name="caseStatus" type="string" />
+    <aura:attribute name="integrationMessage" type="string" />
+    <aura:attribute name="thirdPartySystem" type="string" default="''" />
+    <aura:attribute name="isNonAPICustomer" type="boolean" default="false" />
+    <aura:attribute name="accountName" type="string" />
+    <aura:attribute name="accountParent" type="string" />
+    
+    <aura:if isTrue="{!v.showStage == 'Findings / Notes'}">
+        <lightning:layout verticalAlign="stretch" multipleRows="true">
+            <!-- left column -->
+            <lightning:layoutItem size="8" padding="around-small" class="custom-box">
+                <lightning:inputField fieldName="Case_Comment__c" aura:id="field" class="" disabled="false" required="true" />
+                
+                <div class="slds-p-top_medium slds-p-bottom_medium">
+                    <lightning:button variant="brand" label="Submit" type="submit" class="slds-float_right" />
+                    <br/>
+                </div>
+            </lightning:layoutItem>
+            <!-- right column -->
+            <lightning:layoutItem size="4" padding="around-small" class="custom-box">
+                <h3 class="slds-text-heading_medium slds-p-bottom_small">Guidance for Success</h3>
+                <ul class="slds-list_dotted">
+                    <li>Enter in your findings in this section</li>
+                    <li>All notes must be added here. <strong>Do NOT add additional notes to the Description of the case</strong></li>
+                    <li>Notes should include what you found, troubleshooting tips and what you did to solve (dispatch needed or problem solved)</li>
+                </ul>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showStage == 'Reminder / Follow Up'}">
+        <lightning:layout verticalAlign="stretch" multipleRows="true">
+            <!-- left column -->
+            <lightning:layoutItem size="8" padding="around-small" class="custom-box">
+                <lightning:inputField fieldName="No_Reminder__c" value="{!v.NoReminder}" aura:id="field" class="" disabled="false" required="false" />
+                <lightning:inputField fieldName="Reminder_Date_Time__c" aura:id="field" class="" disabled="false" required="{!v.NoReminder == false}" />            
+                <lightning:inputField fieldName="Reminder_Note__c" aura:id="field" class="" disabled="false" required="{!v.NoReminder == false}" />
+                
+                <div class="slds-p-top_medium slds-p-bottom_medium">
+                    <lightning:button variant="brand" label="Submit" type="submit" class="slds-float_right" />
+                    <br/>
+                </div>                
+            </lightning:layoutItem>
+            <!-- right column -->
+            <lightning:layoutItem size="4" padding="around-small" class="custom-box">
+                <h3 class="slds-text-heading_medium slds-p-bottom_small">Guidance for Success</h3>
+                <ul class="slds-list_dotted">
+                                <li>If a "Reminder / Follow Up" IS required:</li>
+                    <ul class="slds-list_dotted">
+                        <li>Enter Reminder Date/Time</li>
+                        <li>In the Reminder Note field, indicate if you made a change that will need to be setback.</li>
+                        <ul class="slds-list_dotted">
+                            <li>Be as detailed as possible about what Asset / Load/ Schedule was adjusted.</li>
+                            <li>Include the original setting so it can quickly be returned to normal.</li>
+                        </ul>
+                    </ul>
+                </ul>
+            </lightning:layoutItem>
+        </lightning:layout>    
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showStage == 'Report Back'}">
+        <lightning:layout verticalAlign="stretch" multipleRows="true">
+            <!-- left column -->
+            <lightning:layoutItem size="8" padding="around-small" class="custom-box">
+                <lightning:inputField fieldName="No_Report_Back__c" value="{!v.NoReportBack}" aura:id="field" class="" disabled="false" required="false" />
+                <lightning:inputField fieldName="Report_Back_Communication_Method__c" aura:id="field" class="" disabled="false" required="{!v.NoReportBack == false}" />
+                
+                <div class="slds-p-top_medium slds-p-bottom_medium">
+                    <lightning:button variant="brand" label="Submit" type="submit" class="slds-float_right" />
+                    <br/>
+                </div>
+            </lightning:layoutItem>
+            <!-- right column -->
+            <lightning:layoutItem size="4" padding="around-small" class="custom-box">
+                <h3 class="slds-text-heading_medium slds-p-bottom_small">Guidance for Success</h3>
+                <ul class="slds-list_dotted">
+                    <li>If replying to a customer or corporate contact, indicate how by selecting the corresponding method used to reply</li>
+                    <li>If a "Report Back" is needed, select the communication method number:</li>
+                    <ul class="slds-list_ordered">
+                        <li>Via Email: Reply to the email in Ring Central</li>
+                        <li>Via Phone Call: Use the "Findings / Notes stage to enter call notes &amp; details of the call.</li>
+                        <li>Via 3rd Party: Move to "Update 3rd Party" stage.</li>
+                    </ul>
+                </ul>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showStage == 'Review / Escalate'}">
+        <lightning:layout verticalAlign="stretch" multipleRows="true">
+            <!-- left column -->
+            <lightning:layoutItem size="8" padding="around-small" class="custom-box">
+                <lightning:inputField fieldName="No_Review_Escalation__c" value="{!v.NoReview}" aura:id="field" class="" disabled="false" required="false" />
+                <lightning:inputField fieldName="Escalate_To__c" aura:id="field" class="" disabled="false" required="{!v.NoReview == false}" />            
+                <lightning:inputField fieldName="Escalation_Notes__c" aura:id="field" class="" disabled="false" required="{!v.NoReview == false}" />
+                <lightning:outputField fieldName="OwnerId" aura:id="field" class="" disabled="false" />
+                
+                <div class="slds-p-top_medium slds-p-bottom_medium">
+                    <lightning:button variant="brand" label="Submit" type="submit" class="slds-float_right" />
+                    <br/>
+                </div>                
+            </lightning:layoutItem>
+            <!-- right column -->
+            <lightning:layoutItem size="4" padding="around-small" class="custom-box">
+                <h3 class="slds-text-heading_medium slds-p-bottom_small">Guidance for Success</h3>
+                <ul class="slds-list_dotted">                    
+                    <li>If a "Review / Escalation" is needed:</li>
+                    <ul class="slds-list_dotted">
+                        <li>Choose the appropriate party to Escalate To (obtain approval from a Supervisor, Engineer, Tech Lead or Account Lead before escalating)</li>
+                    </ul>     
+                    <aura:if isTrue="{!v.accountParent == 'Office Depot'}">
+                        <li><strong>Prior to escalating:</strong> Complete all steps in the "Office Depot: Too Hot or Too Cold Store" article to ensure escalation is necessary.</li>
+                    </aura:if>
+                    <li>In the "Escalation Notes" field, enter detailed notes about what is needed.</li>
+                    <li>Use the following <strong>Text Expander Codes</strong> for Parts on Order escalations:</li>
+                    <ul class="slds-list_dotted">
+                            <li>RAD.po</li>
+                            <li>OD.po</li>
+                            <li>PETC.po</li>
+                            <li>Ulta.po</li>
+                            <li>HM.po</li>
+                            <li>PETM.po</li> 
+                    </ul>
+                    <li>Upon submit, the case status will automatically change to "Needs Review"and a Task is created and assigned appropriately.</li>
+                    <li>Move to "Update 3rd Party" stage to notify customer of escalation. Advise customer that the issue is under review.</li>
+                </ul>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showStage == '3rd Party'}">
+        <lightning:layout verticalAlign="stretch" multipleRows="true">
+            <!-- left column -->
+            <lightning:layoutItem size="8" padding="around-small" class="custom-box">                
+                <lightning:inputField fieldName="Stage__c" value="Update 3rd Party" aura:id="field" class="slds-hide" disabled="false" required="true" />
+				<aura:if isTrue="{!or(v.thirdPartySystem != '', v.isNonAPICustomer == true)}">
+                    <lightning:outputField fieldName="Open_3rd_Party_WO__c" aura:id="field" class="" disabled="" />
+                    <lightning:inputField fieldName="X3rd_Party_Updated__c" aura:id="field" class="" disabled="" />
+                    <lightning:inputField fieldName="No_3rd_Party_Update_Dispatch_Not_Neede__c" aura:id="field" class="" disabled="" />
+                </aura:if>
+                <aura:if isTrue="{!v.thirdPartySystem == 'ServiceNow'}">
+                    <!--<lightning:inputField fieldName="Vendor_Resolution_Notes__c" aura:id="field" class="" disabled="" required="false" />-->
+                    <lightning:inputField fieldName="Vendor_Relationship__c" aura:id="field" class="" disabled="" required="false" />                	
+                </aura:if>
+                <aura:if isTrue="{!and(v.thirdPartySystem == '', v.isNonAPICustomer == false)}">
+                    <lightning:inputField fieldName="Vendor_Resolution_Notes__c" aura:id="field" class="" disabled="" required="false" />
+                    <lightning:inputField fieldName="Vendor_Relationship__c" aura:id="field" class="" disabled="" required="false" />
+                </aura:if>
+                <aura:if isTrue="{!v.accountParent == 'Office Depot'}">
+                    <lightning:inputField fieldName="Screenshots_Uploaded_to_FM_Pilot__c" aura:id="field" class="" disabled="false" required="true" />
+                </aura:if>                
+                
+                <div class="slds-p-top_medium slds-p-bottom_medium">
+                    <lightning:button variant="brand" label="Submit" type="submit" class="slds-float_right" />
+                    <br/>
+                </div>                
+            </lightning:layoutItem>
+            <!-- right column -->
+            <lightning:layoutItem size="4" padding="around-small" class="custom-box">
+                <h3 class="slds-text-heading_medium slds-p-bottom_small">Guidance for Success</h3>
+                <ul class="slds-list_dotted">
+                    <li>Depending on the type of customer, the notes in this section will change.  Pay attention to different directions for each customer.</li>
+                    
+                </ul>
+                <br/>
+                <aura:if isTrue="{!v.thirdPartySystem == 'SMS Assist'}">
+                    <h3 class="slds-text-heading_small slds-p-bottom_small">SMS Assist:</h3>
+                    <ul class="slds-list_dotted">
+                      <li>These guidance notes are for PETSMART</li>
+                      <li>If a dispatch is needed:</li>
+                         <ul class="slds-list_dotted">
+                         <li>Enter Resolution Notes and close case as "Dispatched to Vendor".</li>
+                         <li>This will automatically cancel the SMS Assist Work Order and create a new Work Order for the new vendor.</li>
+                         </ul>
+                       <li>If a dispatch is NOT needed, enter Resolution Notes and close case with any other Resolution code.</li>
+                    </ul>
+                </aura:if>
+                
+                <aura:if isTrue="{!v.thirdPartySystem == 'ServiceChannel'}">
+                     <h3 class="slds-text-heading_small slds-p-bottom_small">Ulta, Rite Aid, Best Buy, J.Crew, H&amp;M, Cinemark:</h3>
+                     <ul class="slds-list_dotted">
+                        <li>If no dispatch is needed, add all detailed notes to the Resolution box and close out your case.  Notes will transfer to Service Channel and close out the Work Order automatically.</li>
+                        <li>If a dispatch is needed, click the Open 3rd Party WO link to log in to Service Channel.  Dispatch to the appropriate vendor using appropriate KB article. Once the Work Order is no longer assigned to Phoenix, come back to Salesforce. Add Resolution Notes. Close case as "Dispatched to Vendor".</li>
+                	</ul>
+                    <br/>
+                    <h3 class="slds-text-heading_small slds-p-bottom_small">Petco:</h3>
+                    <ul class="slds-list_dotted">
+                        <li>The API is NOT turned on for Petco.</li>
+                        <li>All PETCO Salesforce cases, should match to a corresponding Service Channel Work Order.</li>
+                        <li>If the call is via PHONE, and a Service Channel Work Order has NOT already been created:</li>
+                        <ul class="slds-list_dotted">
+                            <li>Create a Salesforce case.</li>  
+                            <li>Login to Service Channel, and create a new Service Channel Work Order on behalf of the customer.</li>  
+                            <li>Enter "Phoenix Created Ticket" in the Description field</li>
+                            <li>Add Service Channel Work Order number in the Customer WO# field in Salesforce</li>
+                        </ul>                        
+                        <li>If a dispatch is needed, create a linked work order from the original work order. Follow the Petco dispatching KB article for steps.</li>                                               
+                    </ul>                    
+
+                    </aura:if>
+                <aura:if isTrue="{!v.thirdPartySystem == 'ServiceNow'}">
+                    <h3 class="slds-text-heading_small slds-p-bottom_small">Customers using this Process:<br/>Sephora</h3>
+                    <ul class="slds-list_dotted">
+                        <li>Sephora uses Service Now. For dispatches please locate the correct vendor in the vendor search box.</li>
+                        <li>Go to Service Now to dispatch.</li>
+                    </ul>
+                </aura:if>
+                <aura:if isTrue="{!v.accountParent == 'Office Depot'}">
+                    <h3 class="slds-text-heading_small slds-p-bottom_small">Office Depot:</h3>
+                    <ul class="slds-list_dotted">
+                        <li>Office Depot uses FM Pilot.  FM Pilot does not have an active API. Complete the following steps for updating FM Pilot:</li>
+                        <li>Manually log in and Accept the Work Order</li>
+                        <li>Go to Attachments and attach screenshots prior to dispatching or closing the ticket.</li>
+                        <!--<ul class="slds-list_dotted">
+                            <li>Initial Screenshot: Upon login before testing</li>
+                            <li>Ending Screenshot: Screenshot during or after testing is performed</li>
+                        </ul>-->
+                    </ul>
+                </aura:if>                
+                <aura:if isTrue="{!and(v.accountParent != 'Office Depot',or(v.thirdPartySystem == '', v.thirdPartySystem == null))}">
+                    <h3 class="slds-text-heading_small slds-p-bottom_small">Customers using this Process:<br/>BBBY, CTS, CPWM, and Transformco/Sears</h3>
+                    <ul class="slds-list_dotted">
+                        <li>Complete the Vendor Resolution Notes field with detailed notes.</li>
+                        <li>Then Search for Store Name + Store Number in the Vendor box.</li>
+                        <li>If the vendor name shows as "Email Dispatch", this means that an email will be sent via Salesforce to the appropriate vendor.  Click Submit.</li>
+                        <li>If the vendor name shows as "Tango Dispatch", this means that the vendor is dispatched through Tango. Login to Tango to complete the dispatch.  Refer to Tango Dispatch article.</li>
+                        <li>Add the Tango Work Order number, to the "Customer WO#" field in your Salesforce case.</li>
+                    </ul>
+                </aura:if>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showStage == 'Resolution'}">
+        <lightning:layout verticalAlign="stretch" multipleRows="true">
+            <!-- left column -->
+            <lightning:layoutItem size="8" padding="around-small" class="custom-box">
+                <lightning:inputField fieldName="Status" aura:id="field" value="{!v.caseStatus}" class="" disabled="false" required="true" />
+                <lightning:inputField fieldName="Origin" aura:id="field" required="true" />
+                <lightning:inputField fieldName="Type" aura:id="field" required="true" />
+                <lightning:inputField fieldName="Issue_Type__c" aura:id="field" required="true" />
+                <lightning:inputField fieldName="Problem__c" aura:id="field" class="" disabled="false" required="true" />
+                <aura:if isTrue="{!v.accountParent == 'Office Depot'}">
+                    <lightning:inputField fieldName="Screenshots_Uploaded_to_FM_Pilot__c" aura:id="field" class="" disabled="false" required="true" />
+                </aura:if>                
+                <aura:if isTrue="{!or(v.caseStatus == 'Closed',v.caseStatus == 'Cancelled')}">
+                <!--<div class="{!or(v.caseStatus == 'Closed',v.caseStatus == 'Cancelled') == true ? '' : 'slds-hide'}">-->
+                    <lightning:inputField fieldName="Resolution__c" aura:id="field" class="" disabled="false" required="true" />
+                    <lightning:inputField fieldName="Resolution_Note__c" aura:id="field" class="tallTextArea" disabled="false" required="true" />
+                <!--</div>-->
+                </aura:if>
+                
+                <div class="slds-p-top_medium slds-p-bottom_medium">
+                    <lightning:button variant="brand" label="Submit" type="submit" class="slds-float_right" />
+                    <br/>
+                </div>
+            </lightning:layoutItem>
+            <!-- right column -->
+            <lightning:layoutItem size="4" padding="around-small" class="custom-box">
+                <h3 class="slds-text-heading_medium slds-p-bottom_small">Guidance for Success</h3>
+                <ul class="slds-list_dotted">
+                    <li>Select Status and Resolution fields</li>
+                    <li>Enter detailed "Resolution Notes"</li>
+                    <li>For Service Channel customers (EXCEPT Petco): For WO's that did NOT require a dispatch, the Resolution Notes will copy over and the Work Order will automatically close.</li>
+                    <li>For ASMS Assist customers: The resolution notes will NOT carry over. Copy and paste them into SMS Assist</li>
+                    <li>For BBBY, CTS, CPWM:  The VENDOR RESOLUTION NOTES will carry over to the email.  Copy and paste into the Resolution Notes field</li>
+                </ul>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </aura:if>
+    
+</aura:component>

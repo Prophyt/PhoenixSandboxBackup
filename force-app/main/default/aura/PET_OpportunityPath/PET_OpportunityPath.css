@@ -1,0 +1,29 @@
+.THIS .custom-box 
+{
+    background-color: #f4f6f9;
+    padding: .5rem;
+    border: 1px solid #d8dde6;
+}
+.THIS .tile-card 
+{
+    cursor: pointer;
+    text-align: center;
+    font-size: 1.1em;
+}
+.THIS .tile-card:hover
+{
+    background-color: rgba(94, 164, 67, 1);
+}
+.THIS .activeTile
+{
+    /* selected tile border */
+    border: 1px solid green;
+}
+.THIS .slds-card
+{
+    /* sets cards to static height and hides text instead of overlap */
+    height: 125px;
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

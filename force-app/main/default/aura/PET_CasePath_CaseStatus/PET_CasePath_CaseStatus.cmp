@@ -1,0 +1,47 @@
+<aura:component implements="force:hasRecordId,force:lightningQuickAction" access="global">
+    
+    <aura:attribute name="recordTypeId" type="String"/>
+    <aura:attribute name="caseStatus" type="string" />
+    
+    
+    <lightning:recordEditForm aura:id="recordFormx"
+                              objectApiName="Case"  
+                              recordId="{!v.recordId}"
+                              recordTypeId="{!v.recordTypeId}"
+                              class="slds-card__body_inner"
+                              onload="{!c.handleOnLoad}"
+                              onsubmit="{!c.handleOnSubmit}"
+                              onsuccess="{!c.handleOnSuccess}"
+                              onerror="{!c.handleOnError}">
+        <lightning:messages/>
+        <lightning:layout verticalAlign="stretch" multipleRows="true">
+            <!-- left column -->
+            <lightning:layoutItem size="8" padding="around-small" class="custom-box">
+                <lightning:inputField fieldName="Status" aura:id="field" value="{!v.caseStatus}" class="" disabled="false" required="true" />
+                <lightning:inputField fieldName="Origin" aura:id="field" required="true" />
+                <lightning:inputField fieldName="Type" aura:id="field" required="true" />
+                <lightning:inputField fieldName="Issue_Type__c" aura:id="field" required="true" />
+                <lightning:inputField fieldName="Problem__c" aura:id="field" class="" disabled="false" required="true" />
+                <aura:if isTrue="{!v.caseStatus == 'Closed'}">
+                    <lightning:inputField fieldName="Resolution__c" aura:id="field" class="" disabled="false" required="true" />
+                    <lightning:inputField fieldName="Resolution_Note__c" aura:id="field" class="" disabled="false" required="true" />
+                </aura:if>
+                
+                <div class="slds-p-top_medium slds-p-bottom_medium">
+                    <lightning:button variant="brand" label="Submit" type="submit" class="slds-float_right" />
+                    <br/>
+                </div>
+            </lightning:layoutItem>
+            <!-- right column -->
+            <lightning:layoutItem size="4" padding="around-small" class="custom-box">
+                <h3 class="slds-text-heading_medium slds-p-bottom_small">Guidance for Success</h3>
+                <ul class="slds-list_dotted">
+                    <li>Choose the correct Case Status</li>
+                    <li>Enter detailed "Resolution Notes"</li>
+                    <li>For WO's that did NOT require a dispatch, the Resolution Notes will copy over and the Work Order will automatically close.</li>
+                </ul>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </lightning:recordEditForm>
+    
+</aura:component>

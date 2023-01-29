@@ -1,0 +1,92 @@
+<aura:component controller="AlertBarController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global">
+    <aura:handler event="c:PET_AlertEvent" action="{!c.handleEvent}" includeFacets="true" />
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    <aura:handler event="lightning:tabRefreshed" action="{!c.doInit}"/>
+    <aura:handler event="lightning:tabFocused" action="{!c.doInit}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="alerts" type="List" access="global"/>
+    <aura:attribute name="alertsList" type="List" access="global"/>
+    <aura:attribute name="alertCount" type="integer" default="0" access="global"/>
+    <aura:attribute name="messageFromEvent" type="String" default=""/>
+    
+    <aura:if isTrue="{!v.alertCount > 0}">
+        <div style="background-color: transparent; border-radius: 5px; width: 100%;">
+            <div class="slds-notify slds-is-relative sch-notify_arrange-last" style="width: 100%; padding: 5px;">
+                <aura:iteration items="{!v.alerts}" var="a">
+                    <aura:if isTrue="{!a.Alert_Applies_to__c == 'Corporate Account and ALL its Stores'}">
+                        <div class="slds-theme_warning slds-p-around_small" role="alert" style="display: flex; border-radius: 5px; width: 100%; margin-top: 5px; align-items: center;">
+                            <span class="slds-assistive-text">warning</span>
+                            <span class="slds-icon_container slds-m-right_small slds-no-flex slds-align-top">
+                                <lightning:icon iconName="utility:warning" size="small" variant="inverse" />
+                            </span>
+                            <div class="slds-notify__content">
+                                <h3 class="slds-text-heading_small"><aura:unescapedHtml value="{!a.Message__c}"/></h3>
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                    <aura:if isTrue="{!a.Alert_Applies_to__c == 'This Store Only'}">
+                        <div class="slds-theme_info slds-p-around_small" role="alert" style="display: flex; border-radius: 5px; width: 100%; margin-top: 5px; align-items: center;">
+                            <span class="slds-assistive-text">warning</span>
+                            <span class="slds-icon_container slds-m-right_small slds-no-flex slds-align-top">
+                                <lightning:icon iconName="utility:info" size="small" variant="inverse" />
+                            </span>
+                            <div class="slds-notify__content">
+                                <h3 class="slds-text-heading_small"><aura:unescapedHtml value="{!a.Message__c}"/></h3>
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                    <aura:if isTrue="{!a.Type == 'error'}">
+                        <div class=" slds-theme_error slds-p-around_small" role="alert" style="display: flex; border-radius: 5px; width: 100%; margin-top: 5px; align-items: center;">
+                            <span class="slds-assistive-text">warning</span>
+                            <span class="slds-icon_container slds-m-right_small slds-no-flex slds-align-top">
+                                <lightning:icon iconName="utility:warning" size="small" variant="inverse" />
+                            </span>
+                            <div class="slds-notify__content">
+                                <h3 class="slds-text-heading_small">{!a.Text}</h3>
+                            </div>
+                        </div>
+                    </aura:if>
+
+                    <aura:if isTrue="{!a.Type == 'warning'}">
+                        <div class=" slds-theme_warning slds-p-around_small" role="alert" style="display: flex; border-radius: 5px; width: 100%; margin-top: 5px; align-items: center;">
+                            <span class="slds-assistive-text">error</span>
+                            <span class="slds-icon_container slds-m-right_small slds-no-flex slds-align-top">
+                                <lightning:icon iconName="utility:error" size="small" variant="inverse" />
+                            </span>
+                            <div class="slds-notify__content">
+                                <h3 class="slds-text-heading_small">{!a.Text}</h3>
+                            </div>
+                        </div>               
+                    </aura:if> 
+
+                    <aura:if isTrue="{!a.Type == 'success'}">
+                        <div class=" slds-theme_success slds-p-around_small" role="alert" style="display: flex; border-radius: 5px; width: 100%; margin-top: 5px; align-items: center;">
+                            <span class="slds-assistive-text">success</span>
+                            <span class="slds-icon_container slds-m-right_small slds-no-flex slds-align-top">
+                                <lightning:icon iconName="utility:check" size="small" variant="inverse" />
+                            </span>
+                            <div class="slds-notify__content">
+                                <h3 class="slds-text-heading_small">{!a.Text}</h3>
+                            </div>
+                        </div>                
+                    </aura:if>
+
+                    <aura:if isTrue="{!a.Type == 'info'}">
+                        <div class=" slds-theme_info slds-p-around_small" role="alert" style="display: flex; border-radius: 5px; width: 100%; margin-top: 5px; align-items: center;">
+                            <span class="slds-assistive-text">info</span>
+                            <span class="slds-icon_container slds-m-right_small slds-no-flex slds-align-top">
+                                <lightning:icon iconName="utility:info_alt" size="small" variant="inverse" />
+                            </span>
+                            <div class="slds-notify__content">
+                                <h3 class="slds-text-heading_small">{!a.Text}</h3>
+                            </div>
+                        </div>
+                    </aura:if>                    
+                </aura:iteration>
+            </div>
+        </div>
+    </aura:if>
+</aura:component>

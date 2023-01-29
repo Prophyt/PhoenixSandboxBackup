@@ -1,0 +1,90 @@
+<aura:component >
+    <aura:attribute name="showStage" type="string" />
+    
+    <lightning:layout verticalAlign="stretch" multipleRows="true" horizontalAlign="space" class="slds-p-bottom_small">
+        <!--
+        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="1" largeDeviceSize="1" padding="around-small" class="custom-box tile-card">
+            <div onclick="{!c.setStage}" data-value="Prospecting" class="{!v.showStage == 'Prospecting' ? 'activeTile' : ''}">
+                <lightning:card variant="Narrow" title="" iconName="" footer="" class="slds-box">
+                    <lightning:icon iconName="utility:broadcast"/>
+                    <p class="">Prospecting</p>
+                </lightning:card>
+            </div>
+        </lightning:layoutItem>
+		-->
+        
+        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="1" largeDeviceSize="1" padding="around-small" class="custom-box tile-card">
+            <div onclick="{!c.setStage}" data-value="Identified Opportunity" class="{!v.showStage == 'Identified Opportunity' ? 'activeTile' : ''}">
+                <lightning:card variant="Narrow" title="" iconName="" footer="" class="slds-box">
+                    <lightning:icon iconName="utility:light_bulb"/>
+                    <p class="">Identified Opportunity</p>
+                </lightning:card>
+            </div>
+        </lightning:layoutItem>
+        
+        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="1" largeDeviceSize="1" padding="around-small" class="custom-box tile-card">
+            <div onclick="{!c.setStage}" data-value="Discovery" class="{!v.showStage == 'Discovery' ? 'activeTile' : ''}">
+                <lightning:card variant="Narrow" title="" iconName="" footer="" class="slds-box">
+                    <lightning:icon iconName="utility:einstein"/>
+                    <p class="">Discovery</p>
+                </lightning:card>
+            </div>
+        </lightning:layoutItem>
+        
+        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="1" largeDeviceSize="1" padding="around-small" class="custom-box tile-card">
+            <div onclick="{!c.setStage}" data-value="Value Proposition / Scope of Work Proposal" class="{!v.showStage == 'Value Proposition / Scope of Work Proposal' ? 'activeTile' : ''}">
+                <lightning:card variant="Narrow" title="" iconName="" footer="" class="slds-box">
+                    <lightning:icon iconName="utility:standard_objects"/>
+                    <p class="">Scope of Work Proposal</p>
+                </lightning:card>
+            </div>
+        </lightning:layoutItem>
+        
+        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="1" largeDeviceSize="1" padding="around-small" class="custom-box tile-card">
+            <div onclick="{!c.setStage}" data-value="Project Timeline" class="{!v.showStage == 'Project Timeline' ? 'activeTile' : ''}">
+                <lightning:card variant="Narrow" title="" iconName="" footer="" class="slds-box">
+                    <lightning:icon iconName="utility:date_time"/>
+                    <p class="">Project Timeline</p>
+                </lightning:card>
+            </div>
+        </lightning:layoutItem> 
+        
+        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="1" largeDeviceSize="1" padding="around-small" class="custom-box tile-card">
+            <div onclick="{!c.setStage}" data-value="Pilot Agreement / Rollout" class="{!v.showStage == 'Pilot Agreement / Rollout' ? 'activeTile' : ''}">
+                <lightning:card variant="Narrow" title="" iconName="" footer="" class="slds-box">
+                    <lightning:icon iconName="utility:locker_service_console"/>
+                    <p class="">Pilot Agreement / Rollout</p>
+                </lightning:card>
+            </div>
+        </lightning:layoutItem>
+        
+        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="1" largeDeviceSize="1" padding="around-small" class="custom-box tile-card">
+            <div onclick="{!c.setStage}" data-value="MSA Completion" class="{!v.showStage == 'MSA Completion' ? 'activeTile' : ''}">
+                <lightning:card variant="Narrow" title="" iconName="" footer="" class="slds-box">
+                    <lightning:icon iconName="utility:like"/>
+                    <p class="">MSA Completion</p>
+                </lightning:card>
+            </div>
+        </lightning:layoutItem>  
+        
+        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="1" largeDeviceSize="1" padding="around-small" class="custom-box tile-card">
+            <div onclick="{!c.setStage}" data-value="Closing Rollout" class="{!v.showStage == 'Closing Rollout' ? 'activeTile' : ''}">
+                <lightning:card variant="Narrow" title="" iconName="" footer="" class="slds-box">
+                    <lightning:icon iconName="utility:fulfillment_order"/>
+                    <p class="">Closing Rollout</p>
+                </lightning:card>
+            </div>
+        </lightning:layoutItem>  
+        
+        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="1" largeDeviceSize="1" padding="around-small" class="custom-box tile-card">
+            <div onclick="{!c.setStage}" data-value="Closed" class="{!v.showStage == 'Closed' ? 'activeTile' : ''}">
+                <lightning:card variant="Narrow" title="" iconName="" footer="" class="slds-box">
+                    <lightning:icon iconName="utility:touch_action"/>
+                    <p class="">Closed</p>
+                </lightning:card>
+            </div>
+        </lightning:layoutItem>          
+    </lightning:layout>
+    
+    
+</aura:component>

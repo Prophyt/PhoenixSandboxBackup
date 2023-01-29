@@ -1,0 +1,264 @@
+<aura:component >
+    <aura:registerEvent name="stageEvent" type="c:PET_StageEvent"/>
+    <aura:attribute name="showStage" type="string" />
+    <aura:attribute name="opportunityStage" type="string" />
+    <aura:attribute name="closedStage" type="String" />
+    <aura:attribute name="pilotIncluded" type="boolean" default="false" />
+    <aura:attribute name="closedOptions" type="List" default="[
+    {'label': 'Closed Won', 'value': 'Closed Won'},
+    {'label': 'Closed Lost', 'value': 'Closed Lost'}
+    ]"/>
+    
+    
+    <aura:if isTrue="{!v.showStage == 'Prospecting'}">
+        <lightning:layout verticalAlign="stretch" multipleRows="true">
+            <!-- left column -->
+            <lightning:layoutItem size="8" padding="around-small" class="custom-box">
+                <lightning:inputField fieldName="StageName" aura:id="field" class="slds-hide" required="true" value="Prospecting" />
+                <lightning:inputField fieldName="Type" aura:id="field" class="" disabled="false" required="true" />
+                <lightning:inputField fieldName="Opportunity_Site_Number__c" aura:id="field" class="" disabled="false" required="true" />
+                <lightning:inputField fieldName="Opportunity_Type__c" aura:id="field" class="" disabled="false" required="true" />
+                <div class="slds-p-top_medium slds-p-bottom_medium">
+                    <lightning:button variant="brand" label="Submit" type="submit" class="slds-float_right" />
+                    <br/>
+                </div>
+            </lightning:layoutItem>
+            <!-- right column -->
+            <lightning:layoutItem size="4" padding="around-small" class="custom-box">
+                <h3 class="slds-text-heading_medium slds-p-bottom_small">Guidance for Success</h3>
+                <ul class="slds-list_dotted">
+                    <li>Prospecting notes go here</li>
+                    <li>Be the best salesperson you can be.</li>
+                </ul>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showStage == 'Identified Opportunity'}">
+        <lightning:layout verticalAlign="stretch" multipleRows="true">
+            <!-- left column -->
+            <lightning:layoutItem size="8" padding="around-small" class="custom-box">
+                <lightning:inputField fieldName="StageName" aura:id="field" class="slds-hide" required="true" value="Identified Opportunity" />
+                <lightning:inputField fieldName="BAS_Type__c" aura:id="field" class="" disabled="false" required="true" />
+                <lightning:inputField fieldName="Sustainability_Goals__c" aura:id="field" class="" disabled="false" required="true" />
+                <lightning:inputField fieldName="Energy_Savings__c" aura:id="field" class="" disabled="false" required="true" />
+                <lightning:inputField fieldName="Average_Square_Feet__c" aura:id="field" class="" disabled="false" required="true" />
+                <lightning:inputField fieldName="Number_of_Buildings__c" aura:id="field" class="" disabled="false" required="true" />
+                <lightning:inputField fieldName="Description" aura:id="field" class="" disabled="false" required="true" />
+                <div class="slds-p-top_medium slds-p-bottom_medium">
+                    <lightning:button variant="brand" label="Submit" type="submit" class="slds-float_right" />
+                    <br/>
+                </div>
+            </lightning:layoutItem>
+            <!-- right column -->
+            <lightning:layoutItem size="4" padding="around-small" class="custom-box">
+                <h3 class="slds-text-heading_medium slds-p-bottom_small">Guidance for Success</h3>
+                <ul class="slds-list_dotted">
+                    <li>In this stage, please confirm the opportunity qualifies by completing all fields.</li>
+                </ul>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showStage == 'Discovery'}">
+        <lightning:layout verticalAlign="stretch" multipleRows="true">
+            <!-- left column -->
+            <lightning:layoutItem size="8" padding="around-small" class="custom-box">
+                <lightning:inputField fieldName="StageName" aura:id="field" class="slds-hide" required="true" value="Discovery" />
+                <lightning:inputField fieldName="Total_Energy_Spend__c" aura:id="field" class="" disabled="false" required="true" />
+                <lightning:inputField fieldName="Number_of_Buildings__c" aura:id="field" class="" disabled="false" required="true" />                
+                <lightning:inputField fieldName="Average_Square_Feet__c" aura:id="field" class="" disabled="false" required="true" />                
+                <lightning:inputField fieldName="BAS_Type__c" aura:id="field" class="" disabled="false" required="true" />
+                
+                <lightning:inputField fieldName="Asset_List_Attached__c" aura:id="field" class="" disabled="false" required="true" />
+                <lightning:inputField fieldName="Questionnaire_Completed__c" aura:id="field" class="" disabled="false" required="" />
+                <lightning:inputField fieldName="Discovery_Meeting__c" aura:id="field" class="" disabled="false" required="" />
+                <lightning:inputField fieldName="Joint_Sales_Conversion__c" aura:id="field" class="" disabled="false" required="" />                
+
+                <div class="slds-p-top_medium slds-p-bottom_medium">
+                    <lightning:button variant="brand" label="Submit" type="submit" class="slds-float_right" />
+                    <br/>
+                </div>                
+            </lightning:layoutItem>
+            <!-- right column -->
+            <lightning:layoutItem size="4" padding="around-small" class="custom-box">
+                <h3 class="slds-text-heading_medium slds-p-bottom_small">Guidance for Success</h3>
+                <ul class="slds-list_dotted">
+                    <li>This stage is where Phoenix acquires more detailed information on the customer’s profile/needs and send out a sales questionnaire to help gather this information.</li>
+                </ul>
+            </lightning:layoutItem>
+        </lightning:layout>    
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showStage == 'Value Proposition / Scope of Work Proposal'}">
+        <lightning:layout verticalAlign="stretch" multipleRows="true">
+            <!-- left column -->
+            <lightning:layoutItem size="8" padding="around-small" class="custom-box">
+                <h1>Fields TBD</h1>
+                <div class="slds-p-top_medium slds-p-bottom_medium">
+                    <lightning:inputField fieldName="StageName" aura:id="field" class="slds-hide" required="true" value="Value Proposition / Scope of Work Proposal" />
+                    <lightning:button variant="brand" label="Submit" type="submit" class="slds-float_right" />
+                    <br/>
+                </div>
+            </lightning:layoutItem>
+            <!-- right column -->
+            <lightning:layoutItem size="4" padding="around-small" class="custom-box">
+                <h3 class="slds-text-heading_medium slds-p-bottom_small">Guidance for Success</h3>
+                <ul class="slds-list_dotted">
+                    <li>In this stage, please fill out the SOW Proposal and attach the file.</li>
+                    <li>Put together a proposal of what we believe we can provide the customer and attach it as a file.</li>
+                    <li>Energy Savings, Projections, Monitoring</li>
+                </ul>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showStage == 'Project Timeline'}">
+        <lightning:layout verticalAlign="stretch" multipleRows="true">
+            <!-- left column -->
+            <lightning:layoutItem size="8" padding="around-small" class="custom-box">
+                <lightning:inputField fieldName="StageName" aura:id="field" class="slds-hide" required="true" value="Value Proposition Project Timeline" />
+                <lightning:inputField fieldName="Roll_Out_Platform__c" aura:id="field" class="" disabled="false" required="true" />
+                <lightning:inputField fieldName="Pilot_Needed__c" aura:id="field" class="" disabled="false" required="true" />
+                <lightning:inputField fieldName="Proposing_Full_Rollout__c" aura:id="field" class="" disabled="false" required="true" />
+                <lightning:inputField fieldName="Project_Timeline_Attached__c" aura:id="field" class="" disabled="false" required="true" />
+                
+                <div class="slds-p-top_medium slds-p-bottom_medium">
+                    <lightning:button variant="brand" label="Submit" type="submit" class="slds-float_right" />
+                    <br/>
+                </div>                
+            </lightning:layoutItem>
+            <!-- right column -->
+            <lightning:layoutItem size="4" padding="around-small" class="custom-box">
+                <h3 class="slds-text-heading_medium slds-p-bottom_small">Guidance for Success</h3>
+                <ul class="slds-list_dotted">
+                    <li>In this stage, please put together a project timeline. This is presented internally to the operations, Michael M &amp; Engineering prior to presenting to the customer.</li>
+                    <li>After the project timeline is approved internally, look at timing for each part of the project and present to the customer</li>
+                    <li>This is typically a meeting with the customer to see how the customer wants to proceed. If there is further approval needed on their end, identify all forms/documents that need signed, etc.</li>
+                    <ul class="slds-list_dotted">
+                        <li>Is the customer going to do a pilot?</li>
+                        <li>Are we proposing full rollout?</li>
+                    </ul>
+                </ul>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showStage == 'Pilot Agreement / Rollout'}">
+        <lightning:layout verticalAlign="stretch" multipleRows="true">
+            <!-- left column -->
+            <lightning:layoutItem size="8" padding="around-small" class="custom-box">                
+                <lightning:inputField fieldName="StageName" aura:id="field" class="slds-hide" required="true" value="Pilot Agreement / Rollout" />
+                <lightning:inputField fieldName="Pilot_Included__c" aura:id="field" class="" disabled="false" required="" onchange="{!c.handlePilotChanged}" />
+                <aura:if isTrue="{!v.pilotIncluded == true}">
+                    <lightning:inputField fieldName="Pilot_Duration__c" aura:id="field" class="" disabled="false" required="true" />
+                    <lightning:inputField fieldName="Pilot_Start_Date__c" aura:id="field" class="" disabled="false" required="true" />
+                </aura:if>
+                <div class="slds-p-top_medium slds-p-bottom_medium">
+                    <lightning:button variant="brand" label="Submit" type="submit" class="slds-float_right" />
+                    <br/>
+                </div>                
+            </lightning:layoutItem>
+            <!-- right column -->
+            <lightning:layoutItem size="4" padding="around-small" class="custom-box">
+                <h3 class="slds-text-heading_medium slds-p-bottom_small">Guidance for Success</h3>
+                <ul class="slds-list_dotted">
+                    <li>If a pilot is agreed upon then we proceed with a Pilot agreement.</li>
+                    <li><strong>NOTE: </strong>Pilots should be avoided if we can go right into the sales portion of a deal (NSA Completion Stage)</li>
+                    <li><strong>IMPORTANT: </strong>This is where the customer’s IT department needs to be involved on how to get everything setup for pilot.</li>
+                    <ul class="slds-list_dotted">
+                        <li>Define timeline, milestones, and key stakeholders.</li>
+                        <li>Having a defined timeline where people can sign off on items will keep everyone on a schedule.</li>
+                        <li>Getting the IT groups on the customer calls early will help with the process.</li>
+                    </ul>
+                    
+                </ul>
+                <br/>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showStage == 'MSA Completion'}">
+        <lightning:layout verticalAlign="stretch" multipleRows="true">
+            <!-- left column -->
+            <lightning:layoutItem size="8" padding="around-small" class="custom-box">
+                <lightning:inputField fieldName="StageName" aura:id="field" class="slds-hide" required="true" value="MSA Completion" />
+                <lightning:inputField fieldName="Partner_Opportunity_Size__c" aura:id="field" value="" class="" disabled="false" required="true" />
+                <lightning:inputField fieldName="MSA_Signature_Date__c" aura:id="field" value="" class="" disabled="false" required="true" />
+                <lightning:inputField fieldName="Amount_in_Company_Currency__c" aura:id="field" value="" class="" disabled="false" required="true" />
+                <div class="slds-p-top_medium slds-p-bottom_medium">
+                    <lightning:button variant="brand" label="Submit" type="submit" class="slds-float_right" />
+                    <br/>
+                </div>
+            </lightning:layoutItem>
+            <!-- right column -->
+            <lightning:layoutItem size="4" padding="around-small" class="custom-box">
+                <h3 class="slds-text-heading_medium slds-p-bottom_small">Guidance for Success</h3>
+                <ul class="slds-list_dotted">
+                    <li>This stage is where the pilot program timeline is complete and we are ready to write up the details of the contract.</li>
+                    <li>Gather all information and agreements to complete a contract</li>
+                    <li>MSA Contract (Master Service Agreement)</li>
+                    <ul class="slds-list_dotted">
+                        <li>What MSA will be used? The customer’s or Phoenix’s?</li>
+                        <li>Define Contract Terms, Pricing, Agreement</li>
+                    </ul>
+
+                </ul>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showStage == 'Closing Rollout'}">
+        <lightning:layout verticalAlign="stretch" multipleRows="true">
+            <!-- left column -->
+            <lightning:layoutItem size="8" padding="around-small" class="custom-box">
+                <!--
+                <lightning:inputField fieldName="Partner_Opportunity_Size__c" aura:id="field" value="" class="slds-hide" disabled="false" required="true" />
+				-->
+                <lightning:inputField fieldName="StageName" aura:id="field" class="slds-hide" required="true" value="Closing Rollout" />
+                <h1>Fields TBD</h1>
+                <div class="slds-p-top_medium slds-p-bottom_medium">
+                    <lightning:button variant="brand" label="Submit" type="submit" class="slds-float_right" />
+                    <br/>
+                </div>
+            </lightning:layoutItem>
+            <!-- right column -->
+            <lightning:layoutItem size="4" padding="around-small" class="custom-box">
+                <h3 class="slds-text-heading_medium slds-p-bottom_small">Guidance for Success</h3>
+                <ul class="slds-list_dotted">
+                    <li>This is the stage where we are possibly in a pilot roll-out.</li>
+                </ul>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showStage == 'Closed'}">
+        <lightning:layout verticalAlign="stretch" multipleRows="true">
+            <!-- left column -->
+            <lightning:layoutItem size="8" padding="around-small" class="custom-box">
+                <lightning:combobox name="ClosedStages" label="Stage" value="{!v.closedStage}" placeholder="Select a Resolution Stage" options="{!v.closedOptions}" onchange="{!c.handleStageChange}"/>
+                <aura:if isTrue="{!v.closedStage == 'Closed Lost'}">
+                    <lightning:inputField fieldName="Closed_Lost_Reason__c" aura:id="field" value="" class="" disabled="false" required="true" />
+                    <aura:set attribute="else">
+                        <lightning:inputField fieldName="Closed_Lost_Reason__c" aura:id="field" value="" class="slds-hide" disabled="false" required="" />                    
+                    </aura:set>
+                </aura:if>
+                <div class="slds-p-top_medium slds-p-bottom_medium">
+                    <lightning:button variant="brand" label="Submit" type="submit" class="slds-float_right" />
+                    <br/>
+                </div>
+            </lightning:layoutItem>
+            <!-- right column -->
+            <lightning:layoutItem size="4" padding="around-small" class="custom-box">
+                <h3 class="slds-text-heading_medium slds-p-bottom_small">Guidance for Success</h3>
+                <ul class="slds-list_dotted">
+                    <li>This is the stage where we are possibly in a pilot roll-out.</li>
+                    <li>A closed-lost scenario is not always a closed door, this is where it is important to add tasks for additional follow-up to re-engage.</li>
+                </ul>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </aura:if>
+    
+    
+    
+</aura:component>

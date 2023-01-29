@@ -1,0 +1,23 @@
+<aura:component >
+    <aura:attribute name="NoReportBack" type="boolean" />
+    <lightning:layout verticalAlign="stretch" multipleRows="true" class="large">
+        <!-- left column -->
+        <lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box">
+            <lightning:inputField fieldName="No_Report_Back__c" value="{!v.NoReportBack}" aura:id="field" class="" disabled="false" required="false" />
+            <lightning:inputField fieldName="Report_Back_Communication_Method__c" aura:id="field" class="" disabled="false" required="{!v.NoReportBack == false}" />            
+        </lightning:layoutItem>
+        <!-- right column -->
+        <lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box">
+            <h3 class="slds-text-heading_medium slds-p-bottom_small">Guidance for Success</h3>
+            <ul class="slds-list_dotted">
+                <li>Select "No Report Back" checkbox if there is no need to report back to customer.</li>
+                <li>If a "Report Back" is needed, select the communication method number:</li>
+                <ul class="slds-list_ordered">
+                    <li>Via Email: Reply to the email in Ring Central</li>
+                    <li>Via Phone Call: Use the "Findings / Notes stage to enter call notes &amp; details of the call.</li>
+                    <li>Via 3rd Party: Move to Case Status stage, then on to the "Update 3rd Party" stage.</li>
+                </ul>
+            </ul>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>
